@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bias-Aware News Aggregator - Project Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <style>
+        .code-block { max-height: 600px; overflow-y: auto; }
+        pre[class*="language-"] { margin: 0; border-radius: 0 0 0.5rem 0.5rem; }
+        .tab-active { border-bottom: 2px solid #3b82f6; color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-4xl font-bold text-white">Bias-Aware News Aggregator</h1>
+                    <p class="text-blue-200 text-lg">Full-Stack Project Documentation & Source Code</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3 mt-6">
+                <span class="px-3 py-1 bg-blue-600/30 text-blue-300 rounded-full text-sm">FastAPI</span>
+                <span class="px-3 py-1 bg-green-600/30 text-green-300 rounded-full text-sm">Python</span>
+                <span class="px-3 py-1 bg-purple-600/30 text-purple-300 rounded-full text-sm">Sentence Transformers</span>
+                <span class="px-3 py-1 bg-yellow-600/30 text-yellow-300 rounded-full text-sm">SQLite</span>
+                <span class="px-3 py-1 bg-cyan-600/30 text-cyan-300 rounded-full text-sm">React/Next.js</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 bg-gray-800 border-b border-gray-700 z-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex gap-1 overflow-x-auto py-2" id="nav-tabs">
+                <button onclick="showSection('overview')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="overview">Overview</button>
+                <button onclick="showSection('structure')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="structure">Project Structure</button>
+                <button onclick="showSection('requirements')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="requirements">Requirements</button>
+                <button onclick="showSection('config')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="config">Config</button>
+                <button onclick="showSection('models')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="models">Models</button>
+                <button onclick="showSection('ingestion')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="ingestion">Ingestion</button>
+                <button onclick="showSection('analysis')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="analysis">Analysis</button>
+                <button onclick="showSection('main')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="main">Main API</button>
+                <button onclick="showSection('frontend')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="frontend">React Component</button>
+                <button onclick="showSection('demo')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="demo">Live Demo</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-8">
+        <!-- Overview Section -->
+        <section id="overview" class="section">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">1</span>
+                Architecture Overview
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 class="text-lg font-semibold text-blue-400 mb-4">🔄 Data Flow</h3>
+                    <ol class="space-y-3 text-gray-300">
+                        <li class="flex items-start gap-3">
+                            <span class="w-6 h-6 bg-blue-600/30 rounded-full flex items-center justify-center text-xs">1</span>
+                            <span><strong>Ingestion:</strong> RSS feeds are fetched and parsed using feedparser</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-6 h-6 bg-blue-600/30 rounded-full flex items-center justify-center text-xs">2</span>
+                            <span><strong>Embedding:</strong> Headlines converted to vectors via sentence-transformers (all-MiniLM-L6-v2)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-6 h-6 bg-blue-600/30 rounded-full flex items-center justify-center text-xs">3</span>
+                            <span><strong>Clustering:</strong> Agglomerative Clustering groups similar stories</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-6 h-6 bg-blue-600/30 rounded-full flex items-center justify-center text-xs">4</span>
+                            <span><strong>Analysis:</strong> TextBlob calculates sentiment polarity</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-6 h-6 bg-blue-600/30 rounded-full flex items-center justify-center text-xs">5</span>
+                            <span><strong>API:</strong> FastAPI serves clustered data to frontend</span>
+                        </li>
+                    </ol>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 class="text-lg font-semibold text-green-400 mb-4">⚡ Key Features</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500">✓</span>
+                            CPU-optimized NLP (no GPU required)
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500">✓</span>
+                            SQLite for easy MVP deployment
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500">✓</span>
+                            Configurable bias labels per source
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500">✓</span>
+                            Real-time clustering with distance threshold
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500">✓</span>
+                            Sentiment analysis with keyword extraction
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500">✓</span>
+                            Side-by-side comparison UI
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-6 bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border border-yellow-700/50 rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-yellow-400 mb-2">⚠️ Important Notes</h3>
+                <ul class="text-gray-300 space-y-2">
+                    <li>• First run will download the sentence-transformers model (~90MB)</li>
+                    <li>• Clustering threshold can be tuned in config.py (default: 0.35)</li>
+                    <li>• Add/remove RSS feeds in the FEED_SOURCES configuration</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Project Structure Section -->
+        <section id="structure" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">2</span>
+                Project Directory Structure
+            </h2>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📁 bias-news-aggregator/</span>
+                    <button onclick="copyCode('structure-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="p-6 text-sm overflow-x-auto" id="structure-code"><code class="text-green-400">bias-news-aggregator/
+├── backend/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI application & endpoints
+│   ├── config.py            # Configuration & RSS feed sources
+│   ├── models.py            # SQLAlchemy database models
+│   ├── ingestion.py         # RSS parsing & data normalization
+│   ├── analysis.py          # NLP: embeddings, clustering, sentiment
+│   └── database.py          # Database connection setup
+│
+├── frontend/
+│   ├── components/
+│   │   └── ClusterView.jsx  # React component for side-by-side view
+│   ├── pages/
+│   │   └── index.js         # Next.js main page
+│   └── styles/
+│       └── globals.css      # Tailwind imports
+│
+├── data/
+│   └── news.db              # SQLite database (auto-created)
+│
+├── requirements.txt         # Python dependencies
+├── package.json             # Node.js dependencies (frontend)
+├── tailwind.config.js       # Tailwind configuration
+└── README.md                # Project documentation</code></pre>
+            </div>
+        </section>
+
+        <!-- Requirements Section -->
+        <section id="requirements" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">3</span>
+                requirements.txt
+            </h2>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📄 requirements.txt</span>
+                    <button onclick="copyCode('requirements-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="code-block"><code class="language-bash" id="requirements-code"># Web Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# Database
+sqlalchemy==2.0.25
+aiosqlite==0.19.0
+
+# RSS Parsing
+feedparser==6.0.10
+
+# NLP & Machine Learning (CPU-optimized)
+sentence-transformers==2.2.2
+torch==2.1.2+cpu  # CPU-only version
+scikit-learn==1.4.0
+textblob==0.17.1
+numpy==1.26.3
+
+# Utilities
+python-dateutil==2.8.2
+httpx==0.26.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Development
+python-dotenv==1.0.0</code></pre>
+            </div>
+            <div class="mt-4 bg-blue-900/30 border border-blue-700/50 rounded-xl p-4">
+                <p class="text-blue-300 text-sm">
+                    <strong>💡 Installation Tip:</strong> For CPU-only PyTorch, use: 
+                    <code class="bg-gray-800 px-2 py-1 rounded">pip install torch --index-url https://download.pytorch.org/whl/cpu</code>
+                </p>
+            </div>
+        </section>
+
+        <!-- Config Section -->
+        <section id="config" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">4</span>
+                config.py
+            </h2>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📄 backend/config.py</span>
+                    <button onclick="copyCode('config-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="code-block"><code class="language-python" id="config-code">"""
+Configuration for Bias-Aware News Aggregator
+"""
+from pydantic_settings import BaseSettings
+from typing import Dict, List
+from enum import Enum
+
+
+class BiasLabel(str, Enum):
+    LEFT = "left"
+    CENTER = "center"
+    RIGHT = "right"
+    UNKNOWN = "unknown"
+
+
+class FeedSource:
+    """Represents an RSS feed source with bias metadata"""
+    def __init__(self, name: str, url: str, bias: BiasLabel):
+        self.name = name
+        self.url = url
+        self.bias = bias
+
+
+class Settings(BaseSettings):
+    """Application settings"""
+    # Database
+    DATABASE_URL: str = "sqlite:///./data/news.db"
+    
+    # NLP Model (CPU-optimized, lightweight)
+    EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
+    
+    # Clustering parameters
+    CLUSTERING_DISTANCE_THRESHOLD: float = 0.35  # Lower = stricter clustering
+    MIN_CLUSTER_SIZE: int = 2  # Minimum articles per cluster
+    
+    # Feed refresh settings
+    FEED_TIMEOUT_SECONDS: int = 30
+    MAX_ARTICLES_PER_FEED: int = 50
+    ARTICLE_AGE_DAYS: int = 3  # Only process articles from last N days
+    
+    class Config:
+        env_file = ".env"
+
+
+# Initialize settings
+settings = Settings()
+
+
+# RSS Feed Sources with Bias Labels
+# Modify this list to add/remove news sources
+FEED_SOURCES: List[FeedSource] = [
+    # Left-leaning sources
+    FeedSource(
+        name="CNN",
+        url="http://rss.cnn.com/rss/cnn_topstories.rss",
+        bias=BiasLabel.LEFT
+    ),
+    FeedSource(
+        name="MSNBC",
+        url="https://www.msnbc.com/feeds/latest",
+        bias=BiasLabel.LEFT
+    ),
+    FeedSource(
+        name="The Guardian",
+        url="https://www.theguardian.com/us-news/rss",
+        bias=BiasLabel.LEFT
+    ),
+    FeedSource(
+        name="NPR",
+        url="https://feeds.npr.org/1001/rss.xml",
+        bias=BiasLabel.LEFT
+    ),
+    
+    # Center sources
+    FeedSource(
+        name="Reuters",
+        url="https://www.reutersagency.com/feed/",
+        bias=BiasLabel.CENTER
+    ),
+    FeedSource(
+        name="AP News",
+        url="https://apnews.com/apf-topnews/feed",
+        bias=BiasLabel.CENTER
+    ),
+    FeedSource(
+        name="BBC",
+        url="http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml",
+        bias=BiasLabel.CENTER
+    ),
+    
+    # Right-leaning sources
+    FeedSource(
+        name="Fox News",
+        url="https://moxie.foxnews.com/google-publisher/latest.xml",
+        bias=BiasLabel.RIGHT
+    ),
+    FeedSource(
+        name="The Daily Wire",
+        url="https://www.dailywire.com/feeds/rss.xml",
+        bias=BiasLabel.RIGHT
+    ),
+    FeedSource(
+        name="New York Post",
+        url="https://nypost.com/feed/",
+        bias=BiasLabel.RIGHT
+    ),
+]
+
+
+def get_feeds_by_bias(bias: BiasLabel) -> List[FeedSource]:
+    """Filter feeds by bias label"""
+    return [f for f in FEED_SOURCES if f.bias == bias]
+
+
+def get_all_feed_urls() -> Dict[str, str]:
+    """Get all feed URLs mapped by source name"""
+    return {f.name: f.url for f in FEED_SOURCES}</code></pre>
+            </div>
+        </section>
+
+        <!-- Models Section -->
+        <section id="models" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">5</span>
+                models.py & database.py
+            </h2>
+            
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden mb-6">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📄 backend/database.py</span>
+                    <button onclick="copyCode('database-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="code-block"><code class="language-python" id="database-code">"""
+Database connection and session management
+"""
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from config import settings
+import os
+
+# Ensure data directory exists
+os.makedirs("data", exist_ok=True)
+
+# Create engine
+engine = create_engine(
+    settings.DATABASE_URL,
+    connect_args={"check_same_thread": False}  # SQLite specific
+)
+
+# Session factory
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Base class for models
+Base = declarative_base()
+
+
+def get_db():
+    """Dependency for FastAPI to get DB session"""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+def init_db():
+    """Initialize database tables"""
+    from models import Article, Cluster  # Import here to avoid circular imports
+    Base.metadata.create_all(bind=engine)</code></pre>
+            </div>
+
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📄 backend/models.py</span>
+                    <button onclick="copyCode('models-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="code-block"><code class="language-python" id="models-code">"""
+SQLAlchemy Database Models
+"""
+from sqlalchemy import Column, Integer, String, Float, DateTime, Text, ForeignKey, JSON
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from database import Base
+
+
+class Article(Base):
+    """Represents a single news article from an RSS feed"""
+    __tablename__ = "articles"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Core article data
+    title = Column(String(500), nullable=False)
+    link = Column(String(1000), unique=True, nullable=False)
+    summary = Column(Text, nullable=True)
+    published_date = Column(DateTime, nullable=True)
+    
+    # Source metadata
+    source_name = Column(String(100), nullable=False, index=True)
+    source_bias = Column(String(20), nullable=False, index=True)  # left, center, right
+    
+    # NLP Analysis results
+    embedding = Column(JSON, nullable=True)  # Vector embedding as JSON array
+    sentiment_polarity = Column(Float, default=0.0)  # -1 to 1
+    sentiment_subjectivity = Column(Float, default=0.0)  # 0 to 1
+    subjective_keywords = Column(JSON, default=list)  # List of flagged words
+    
+    # Clustering
+    cluster_id = Column(Integer, ForeignKey("clusters.id"), nullable=True, index=True)
+    cluster = relationship("Cluster", back_populates="articles")
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def to_dict(self):
+        """Convert to dictionary for API response"""
+        return {
+            "id": self.id,
+            "title": self.title,
+            "link": self.link,
+            "summary": self.summary,
+            "published_date": self.published_date.isoformat() if self.published_date else None,
+            "source_name": self.source_name,
+            "source_bias": self.source_bias,
+            "sentiment_polarity": self.sentiment_polarity,
+            "sentiment_subjectivity": self.sentiment_subjectivity,
+            "subjective_keywords": self.subjective_keywords or [],
+        }
+
+
+class Cluster(Base):
+    """Represents a group of articles about the same story/topic"""
+    __tablename__ = "clusters"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    
+    # Cluster metadata
+    representative_title = Column(String(500))  # Most representative headline
+    topic_keywords = Column(JSON, default=list)  # Extracted topic keywords
+    
+    # Statistics
+    article_count = Column(Integer, default=0)
+    avg_sentiment = Column(Float, default=0.0)
+    sentiment_spread = Column(Float, default=0.0)  # Max - Min sentiment
+    
+    # Bias coverage
+    has_left = Column(Integer, default=0)   # Count of left sources
+    has_center = Column(Integer, default=0) # Count of center sources
+    has_right = Column(Integer, default=0)  # Count of right sources
+    
+    # Relationships
+    articles = relationship("Article", back_populates="cluster")
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def to_dict(self, include_articles=True):
+        """Convert to dictionary for API response"""
+        data = {
+            "id": self.id,
+            "representative_title": self.representative_title,
+            "topic_keywords": self.topic_keywords or [],
+            "article_count": self.article_count,
+            "avg_sentiment": self.avg_sentiment,
+            "sentiment_spread": self.sentiment_spread,
+            "bias_coverage": {
+                "left": self.has_left,
+                "center": self.has_center,
+                "right": self.has_right,
+            },
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+        }
+        
+        if include_articles:
+            data["articles"] = {
+                "left": [a.to_dict() for a in self.articles if a.source_bias == "left"],
+                "center": [a.to_dict() for a in self.articles if a.source_bias == "center"],
+                "right": [a.to_dict() for a in self.articles if a.source_bias == "right"],
+            }
+        
+        return data</code></pre>
+            </div>
+        </section>
+
+        <!-- Ingestion Section -->
+        <section id="ingestion" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">6</span>
+                ingestion.py
+            </h2>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📄 backend/ingestion.py</span>
+                    <button onclick="copyCode('ingestion-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="code-block"><code class="language-python" id="ingestion-code">"""
+RSS Feed Ingestion Engine
+Handles fetching, parsing, and normalizing news articles from RSS feeds.
+"""
+import feedparser
+import httpx
+from datetime import datetime, timedelta
+from typing import List, Optional, Dict, Any
+from dateutil import parser as date_parser
+import logging
+import hashlib
+
+from sqlalchemy.orm import Session
+from models import Article
+from config import FEED_SOURCES, FeedSource, settings, BiasLabel
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+class ArticleData:
+    """Normalized article data structure"""
+    def __init__(
+        self,
+        title: str,
+        link: str,
+        summary: str,
+        published_date: Optional[datetime],
+        source_name: str,
+        source_bias: str
+    ):
+        self.title = title
+        self.link = link
+        self.summary = summary
+        self.published_date = published_date
+        self.source_name = source_name
+        self.source_bias = source_bias
+
+
+class IngestionEngine:
+    """
+    Handles RSS feed ingestion and article normalization.
+    """
+    
+    def __init__(self, db: Session):
+        self.db = db
+        self.client = httpx.Client(timeout=settings.FEED_TIMEOUT_SECONDS)
+        self.cutoff_date = datetime.utcnow() - timedelta(days=settings.ARTICLE_AGE_DAYS)
+    
+    def fetch_feed(self, feed: FeedSource) -> Optional[feedparser.FeedParserDict]:
+        """
+        Fetch and parse an RSS feed.
+        
+        Args:
+            feed: FeedSource object with URL and metadata
+            
+        Returns:
+            Parsed feed or None if failed
+        """
+        try:
+            logger.info(f"Fetching feed: {feed.name} ({feed.url})")
+            
+            # Fetch raw content
+            response = self.client.get(feed.url, follow_redirects=True)
+            response.raise_for_status()
+            
+            # Parse with feedparser
+            parsed = feedparser.parse(response.text)
+            
+            if parsed.bozo and not parsed.entries:
+                logger.warning(f"Feed parsing issue for {feed.name}: {parsed.bozo_exception}")
+                return None
+            
+            logger.info(f"Fetched {len(parsed.entries)} entries from {feed.name}")
+            return parsed
+            
+        except httpx.HTTPError as e:
+            logger.error(f"HTTP error fetching {feed.name}: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"Error fetching {feed.name}: {e}")
+            return None
+    
+    def normalize_entry(self, entry: Dict[Any, Any], feed: FeedSource) -> Optional[ArticleData]:
+        """
+        Normalize a single feed entry into ArticleData.
+        
+        Args:
+            entry: Raw feed entry from feedparser
+            feed: Source feed metadata
+            
+        Returns:
+            Normalized ArticleData or None if invalid
+        """
+        try:
+            # Extract title (required)
+            title = entry.get("title", "").strip()
+            if not title:
+                return None
+            
+            # Extract link (required)
+            link = entry.get("link", "").strip()
+            if not link:
+                return None
+            
+            # Extract summary/description
+            summary = ""
+            if "summary" in entry:
+                summary = entry.summary
+            elif "description" in entry:
+                summary = entry.description
+            elif "content" in entry and entry.content:
+                summary = entry.content[0].get("value", "")
+            
+            # Clean HTML from summary (basic cleaning)
+            summary = self._clean_html(summary)[:1000]  # Limit length
+            
+            # Parse published date
+            published_date = self._parse_date(entry)
+            
+            # Skip old articles
+            if published_date and published_date < self.cutoff_date:
+                return None
+            
+            return ArticleData(
+                title=title[:500],  # Limit title length
+                link=link[:1000],
+                summary=summary,
+                published_date=published_date,
+                source_name=feed.name,
+                source_bias=feed.bias.value
+            )
+            
+        except Exception as e:
+            logger.warning(f"Error normalizing entry: {e}")
+            return None
+    
+    def _parse_date(self, entry: Dict) -> Optional[datetime]:
+        """Parse date from various feed formats"""
+        date_fields = ["published_parsed", "updated_parsed", "created_parsed"]
+        
+        for field in date_fields:
+            if field in entry and entry[field]:
+                try:
+                    from time import mktime
+                    return datetime.fromtimestamp(mktime(entry[field]))
+                except:
+                    pass
+        
+        # Try string parsing as fallback
+        date_strings = ["published", "updated", "created"]
+        for field in date_strings:
+            if field in entry and entry[field]:
+                try:
+                    return date_parser.parse(entry[field])
+                except:
+                    pass
+        
+        return datetime.utcnow()  # Default to now if no date found
+    
+    def _clean_html(self, text: str) -> str:
+        """Remove HTML tags from text (basic implementation)"""
+        import re
+        # Remove HTML tags
+        clean = re.sub(r'<[^>]+>', '', text)
+        # Decode common entities
+        clean = clean.replace('&amp;', '&')
+        clean = clean.replace('&lt;', '<')
+        clean = clean.replace('&gt;', '>')
+        clean = clean.replace('&quot;', '"')
+        clean = clean.replace('&#39;', "'")
+        clean = clean.replace('&nbsp;', ' ')
+        # Normalize whitespace
+        clean = ' '.join(clean.split())
+        return clean.strip()
+    
+    def save_article(self, article_data: ArticleData) -> Optional[Article]:
+        """
+        Save article to database if not already exists.
+        
+        Args:
+            article_data: Normalized article data
+            
+        Returns:
+            Created Article or None if duplicate
+        """
+        # Check if article already exists (by link)
+        existing = self.db.query(Article).filter(Article.link == article_data.link).first()
+        if existing:
+            return None
+        
+        # Create new article
+        article = Article(
+            title=article_data.title,
+            link=article_data.link,
+            summary=article_data.summary,
+            published_date=article_data.published_date,
+            source_name=article_data.source_name,
+            source_bias=article_data.source_bias,
+        )
+        
+        self.db.add(article)
+        return article
+    
+    def ingest_all_feeds(self) -> Dict[str, int]:
+        """
+        Ingest articles from all configured RSS feeds.
+        
+        Returns:
+            Dictionary with ingestion statistics
+        """
+        stats = {
+            "feeds_processed": 0,
+            "feeds_failed": 0,
+            "articles_found": 0,
+            "articles_new": 0,
+            "articles_skipped": 0,
+        }
+        
+        for feed in FEED_SOURCES:
+            parsed = self.fetch_feed(feed)
+            
+            if not parsed:
+                stats["feeds_failed"] += 1
+                continue
+            
+            stats["feeds_processed"] += 1
+            entries = parsed.entries[:settings.MAX_ARTICLES_PER_FEED]
+            
+            for entry in entries:
+                stats["articles_found"] += 1
+                
+                article_data = self.normalize_entry(entry, feed)
+                if not article_data:
+                    stats["articles_skipped"] += 1
+                    continue
+                
+                saved = self.save_article(article_data)
+                if saved:
+                    stats["articles_new"] += 1
+                else:
+                    stats["articles_skipped"] += 1
+        
+        # Commit all new articles
+        try:
+            self.db.commit()
+            logger.info(f"Ingestion complete: {stats}")
+        except Exception as e:
+            logger.error(f"Error committing articles: {e}")
+            self.db.rollback()
+            raise
+        
+        return stats
+    
+    def get_unprocessed_articles(self) -> List[Article]:
+        """Get articles that haven't been embedded yet"""
+        return self.db.query(Article).filter(Article.embedding == None).all()
+    
+    def close(self):
+        """Close HTTP client"""
+        self.client.close()</code></pre>
+            </div>
+        </section>
+
+        <!-- Analysis Section -->
+        <section id="analysis" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">7</span>
+                analysis.py
+            </h2>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📄 backend/analysis.py</span>
+                    <button onclick="copyCode('analysis-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="code-block"><code class="language-python" id="analysis-code">"""
+NLP Analysis Engine
+Handles embeddings, clustering, and sentiment analysis.
+Optimized for CPU inference with lightweight models.
+"""
+import numpy as np
+from typing import List, Dict, Tuple, Optional
+from sentence_transformers import SentenceTransformer
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.metrics.pairwise import cosine_distances
+from textblob import TextBlob
+import logging
+import re
+
+from sqlalchemy.orm import Session
+from models import Article, Cluster
+from config import settings
+
+logger = logging.getLogger(__name__)
+
+
+class NLPAnalyzer:
+    """
+    Handles all NLP operations including:
+    - Sentence embeddings (using sentence-transformers)
+    - Hierarchical clustering
+    - Sentiment analysis
+    """
+    
+    # Subjective/loaded words to flag
+    SUBJECTIVE_KEYWORDS = {
+        # Negative loaded words
+        'slam', 'slammed', 'blast', 'blasted', 'attack', 'attacked',
+        'destroy', 'destroyed', 'crush', 'crushed', 'demolish',
+        'radical', 'extreme', 'extremist', 'dangerous', 'threat',
+        'crisis', 'chaos', 'disaster', 'catastrophe', 'scandal',
+        'shocking', 'outrage', 'outrageous', 'fury', 'furious',
+        'explosive', 'bombshell', 'controversial', 'divisive',
+        
+        # Positive loaded words
+        'hero', 'heroic', 'triumph', 'triumphant', 'victory',
+        'historic', 'landmark', 'breakthrough', 'revolutionary',
+        
+        # Editorial qualifiers
+        'allegedly', 'claimed', 'so-called', 'supposed', 'questionable',
+        'controversial', 'disputed', 'debunked', 'misleading',
+    }
+    
+    def __init__(self):
+        """Initialize the NLP models (lazy loading)"""
+        self._embedding_model = None
+        logger.info("NLPAnalyzer initialized (models will load on first use)")
+    
+    @property
+    def embedding_model(self) -> SentenceTransformer:
+        """Lazy load the embedding model"""
+        if self._embedding_model is None:
+            logger.info(f"Loading embedding model: {settings.EMBEDDING_MODEL}")
+            self._embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+            # Force CPU usage
+            self._embedding_model = self._embedding_model.to('cpu')
+            logger.info("Embedding model loaded successfully")
+        return self._embedding_model
+    
+    def generate_embedding(self, text: str) -> List[float]:
+        """
+        Generate sentence embedding for a text.
+        
+        Args:
+            text: Input text (headline + summary)
+            
+        Returns:
+            List of floats representing the embedding vector
+        """
+        # Combine and clean text
+        text = text.strip()[:512]  # Limit length for efficiency
+        
+        # Generate embedding
+        embedding = self.embedding_model.encode(text, convert_to_numpy=True)
+        
+        return embedding.tolist()
+    
+    def generate_embeddings_batch(self, texts: List[str]) -> np.ndarray:
+        """
+        Generate embeddings for multiple texts efficiently.
+        
+        Args:
+            texts: List of input texts
+            
+        Returns:
+            NumPy array of embeddings (n_texts x embedding_dim)
+        """
+        # Clean texts
+        cleaned = [t.strip()[:512] for t in texts]
+        
+        # Batch encode
+        embeddings = self.embedding_model.encode(
+            cleaned,
+            convert_to_numpy=True,
+            show_progress_bar=True,
+            batch_size=32  # Optimal for CPU
+        )
+        
+        return embeddings
+    
+    def analyze_sentiment(self, text: str) -> Tuple[float, float, List[str]]:
+        """
+        Analyze sentiment and identify subjective keywords.
+        
+        Args:
+            text: Input text (headline + summary)
+            
+        Returns:
+            Tuple of (polarity, subjectivity, list of flagged keywords)
+        """
+        # TextBlob analysis
+        blob = TextBlob(text)
+        polarity = blob.sentiment.polarity  # -1 to 1
+        subjectivity = blob.sentiment.subjectivity  # 0 to 1
+        
+        # Find subjective keywords
+        words = set(re.findall(r'\b\w+\b', text.lower()))
+        flagged_keywords = list(words.intersection(self.SUBJECTIVE_KEYWORDS))
+        
+        return polarity, subjectivity, flagged_keywords
+    
+    def cluster_articles(
+        self,
+        articles: List[Article],
+        distance_threshold: float = None
+    ) -> Dict[int, List[Article]]:
+        """
+        Cluster articles based on semantic similarity.
+        Uses Agglomerative Clustering with cosine distance.
+        
+        Args:
+            articles: List of Article objects with embeddings
+            distance_threshold: Maximum distance for cluster merging
+            
+        Returns:
+            Dictionary mapping cluster_id -> list of articles
+        """
+        if not articles:
+            return {}
+        
+        if distance_threshold is None:
+            distance_threshold = settings.CLUSTERING_DISTANCE_THRESHOLD
+        
+        # Filter articles with embeddings
+        valid_articles = [a for a in articles if a.embedding]
+        
+        if len(valid_articles) < 2:
+            # Not enough articles to cluster
+            return {0: valid_articles} if valid_articles else {}
+        
+        # Convert embeddings to numpy array
+        embeddings = np.array([a.embedding for a in valid_articles])
+        
+        # Compute distance matrix
+        distance_matrix = cosine_distances(embeddings)
+        
+        # Perform Agglomerative Clustering
+        clustering = AgglomerativeClustering(
+            n_clusters=None,
+            distance_threshold=distance_threshold,
+            metric='precomputed',
+            linkage='average'
+        )
+        
+        cluster_labels = clustering.fit_predict(distance_matrix)
+        
+        # Group articles by cluster
+        clusters: Dict[int, List[Article]] = {}
+        for article, label in zip(valid_articles, cluster_labels):
+            if label not in clusters:
+                clusters[label] = []
+            clusters[label].append(article)
+        
+        logger.info(f"Created {len(clusters)} clusters from {len(valid_articles)} articles")
+        
+        return clusters
+    
+    def extract_topic_keywords(self, articles: List[Article], top_n: int = 5) -> List[str]:
+        """
+        Extract common keywords from a cluster of articles.
+        Simple TF approach using word frequency.
+        
+        Args:
+            articles: List of articles in a cluster
+            top_n: Number of keywords to extract
+            
+        Returns:
+            List of top keywords
+        """
+        # Combine all text
+        all_text = " ".join([
+            f"{a.title} {a.summary or ''}" for a in articles
+        ]).lower()
+        
+        # Tokenize and filter
+        words = re.findall(r'\b[a-z]{4,}\b', all_text)
+        
+        # Remove common stopwords
+        stopwords = {
+            'that', 'this', 'with', 'from', 'have', 'been', 'were', 'will',
+            'would', 'could', 'should', 'their', 'there', 'what', 'when',
+            'where', 'which', 'while', 'about', 'after', 'before', 'into',
+            'through', 'during', 'under', 'again', 'further', 'then', 'once',
+            'here', 'more', 'some', 'such', 'other', 'than', 'very', 'just',
+            'also', 'over', 'only', 'even', 'most', 'says', 'said', 'news',
+        }
+        words = [w for w in words if w not in stopwords]
+        
+        # Count frequencies
+        from collections import Counter
+        word_counts = Counter(words)
+        
+        # Return top keywords
+        return [word for word, _ in word_counts.most_common(top_n)]
+
+
+class AnalysisEngine:
+    """
+    Orchestrates the full analysis pipeline:
+    1. Generate embeddings for new articles
+    2. Analyze sentiment
+    3. Perform clustering
+    4. Create/update cluster records
+    """
+    
+    def __init__(self, db: Session):
+        self.db = db
+        self.nlp = NLPAnalyzer()
+    
+    def process_new_articles(self, articles: List[Article]) -> int:
+        """
+        Process articles: generate embeddings and analyze sentiment.
+        
+        Args:
+            articles: List of unprocessed articles
+            
+        Returns:
+            Number of articles processed
+        """
+        if not articles:
+            return 0
+        
+        logger.info(f"Processing {len(articles)} articles")
+        
+        # Prepare texts for batch embedding
+        texts = [f"{a.title} {a.summary or ''}" for a in articles]
+        
+        # Batch generate embeddings
+        embeddings = self.nlp.generate_embeddings_batch(texts)
+        
+        # Process each article
+        for article, embedding, text in zip(articles, embeddings, texts):
+            # Store embedding
+            article.embedding = embedding.tolist()
+            
+            # Analyze sentiment
+            polarity, subjectivity, keywords = self.nlp.analyze_sentiment(text)
+            article.sentiment_polarity = polarity
+            article.sentiment_subjectivity = subjectivity
+            article.subjective_keywords = keywords
+        
+        self.db.commit()
+        logger.info(f"Processed {len(articles)} articles")
+        
+        return len(articles)
+    
+    def perform_clustering(self) -> List[Cluster]:
+        """
+        Cluster all articles and create/update cluster records.
+        
+        Returns:
+            List of created Cluster objects
+        """
+        # Get all articles with embeddings
+        articles = self.db.query(Article).filter(Article.embedding != None).all()
+        
+        if not articles:
+            logger.info("No articles to cluster")
+            return []
+        
+        # Clear existing cluster assignments
+        for article in articles:
+            article.cluster_id = None
+        
+        # Delete old clusters
+        self.db.query(Cluster).delete()
+        self.db.commit()
+        
+        # Perform clustering
+        clusters_dict = self.nlp.cluster_articles(articles)
+        
+        # Create Cluster records
+        created_clusters = []
+        
+        for cluster_id, cluster_articles in clusters_dict.items():
+            # Skip clusters with only one article (unless it's the only one)
+            if len(cluster_articles) < settings.MIN_CLUSTER_SIZE and len(clusters_dict) > 1:
+                continue
+            
+            # Calculate cluster statistics
+            sentiments = [a.sentiment_polarity for a in cluster_articles]
+            avg_sentiment = sum(sentiments) / len(sentiments)
+            sentiment_spread = max(sentiments) - min(sentiments)
+            
+            # Count bias coverage
+            bias_counts = {"left": 0, "center": 0, "right": 0}
+            for article in cluster_articles:
+                if article.source_bias in bias_counts:
+                    bias_counts[article.source_bias] += 1
+            
+            # Find representative title (most neutral)
+            sorted_by_subjectivity = sorted(
+                cluster_articles,
+                key=lambda a: abs(a.sentiment_polarity)
+            )
+            representative_title = sorted_by_subjectivity[0].title
+            
+            # Extract topic keywords
+            topic_keywords = self.nlp.extract_topic_keywords(cluster_articles)
+            
+            # Create cluster record
+            cluster = Cluster(
+                representative_title=representative_title,
+                topic_keywords=topic_keywords,
+                article_count=len(cluster_articles),
+                avg_sentiment=avg_sentiment,
+                sentiment_spread=sentiment_spread,
+                has_left=bias_counts["left"],
+                has_center=bias_counts["center"],
+                has_right=bias_counts["right"],
+            )
+            
+            self.db.add(cluster)
+            self.db.flush()  # Get cluster ID
+            
+            # Assign articles to cluster
+            for article in cluster_articles:
+                article.cluster_id = cluster.id
+            
+            created_clusters.append(cluster)
+        
+        self.db.commit()
+        logger.info(f"Created {len(created_clusters)} clusters")
+        
+        return created_clusters
+    
+    def get_clusters_with_articles(self) -> List[Cluster]:
+        """
+        Get all clusters with their articles loaded.
+        
+        Returns:
+            List of Cluster objects with articles relationship loaded
+        """
+        clusters = (
+            self.db.query(Cluster)
+            .order_by(Cluster.article_count.desc())
+            .all()
+        )
+        
+        # Filter to clusters with diverse sources
+        diverse_clusters = [
+            c for c in clusters
+            if (c.has_left > 0 and c.has_right > 0) or c.article_count >= 3
+        ]
+        
+        return diverse_clusters if diverse_clusters else clusters</code></pre>
+            </div>
+        </section>
+
+        <!-- Main API Section -->
+        <section id="main" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">8</span>
+                main.py (FastAPI Application)
+            </h2>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📄 backend/main.py</span>
+                    <button onclick="copyCode('main-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="code-block"><code class="language-python" id="main-code">"""
+Bias-Aware News Aggregator - FastAPI Backend
+Main application entry point with API endpoints.
+"""
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+from typing import List, Optional
+from pydantic import BaseModel
+from datetime import datetime
+import logging
+
+from database import get_db, init_db
+from models import Article, Cluster
+from ingestion import IngestionEngine
+from analysis import AnalysisEngine
+from config import settings, FEED_SOURCES, BiasLabel
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+# Initialize FastAPI app
+app = FastAPI(
+    title="Bias-Aware News Aggregator",
+    description="Aggregate news from multiple sources, cluster by topic, and highlight framing differences.",
+    version="1.0.0",
+)
+
+# CORS middleware for frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],  # Next.js dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# ============== Pydantic Response Models ==============
+
+class ArticleResponse(BaseModel):
+    id: int
+    title: str
+    link: str
+    summary: Optional[str]
+    published_date: Optional[str]
+    source_name: str
+    source_bias: str
+    sentiment_polarity: float
+    sentiment_subjectivity: float
+    subjective_keywords: List[str]
+
+    class Config:
+        from_attributes = True
+
+
+class BiasArticles(BaseModel):
+    left: List[ArticleResponse]
+    center: List[ArticleResponse]
+    right: List[ArticleResponse]
+
+
+class ClusterResponse(BaseModel):
+    id: int
+    representative_title: str
+    topic_keywords: List[str]
+    article_count: int
+    avg_sentiment: float
+    sentiment_spread: float
+    bias_coverage: dict
+    articles: BiasArticles
+
+
+class IngestionStats(BaseModel):
+    feeds_processed: int
+    feeds_failed: int
+    articles_found: int
+    articles_new: int
+    articles_skipped: int
+    message: str
+
+
+class FeedInfo(BaseModel):
+    name: str
+    url: str
+    bias: str
+
+
+class RefreshResponse(BaseModel):
+    ingestion: IngestionStats
+    articles_processed: int
+    clusters_created: int
+    timestamp: str
+
+
+# ============== Startup Event ==============
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database on startup"""
+    logger.info("Initializing database...")
+    init_db()
+    logger.info("Database initialized successfully")
+
+
+# ============== API Endpoints ==============
+
+@app.get("/", tags=["Health"])
+async def root():
+    """Health check endpoint"""
+    return {
+        "status": "healthy",
+        "service": "Bias-Aware News Aggregator",
+        "version": "1.0.0"
+    }
+
+
+@app.get("/feeds", response_model=List[FeedInfo], tags=["Feeds"])
+async def list_feeds():
+    """
+    List all configured RSS feed sources.
+    """
+    return [
+        FeedInfo(name=f.name, url=f.url, bias=f.bias.value)
+        for f in FEED_SOURCES
+    ]
+
+
+@app.post("/feeds/refresh", response_model=RefreshResponse, tags=["Feeds"])
+async def refresh_feeds(
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
+    """
+    Trigger a full refresh of all RSS feeds.
+    
+    This endpoint:
+    1. Fetches new articles from all configured RSS feeds
+    2. Generates embeddings for new articles
+    3. Analyzes sentiment
+    4. Performs clustering
+    
+    Note: First run will download the NLP model (~90MB) which may take a minute.
+    """
+    try:
+        # Step 1: Ingest feeds
+        logger.info("Starting feed ingestion...")
+        ingestion_engine = IngestionEngine(db)
+        ingestion_stats = ingestion_engine.ingest_all_feeds()
+        ingestion_engine.close()
+        
+        # Step 2: Process new articles (embeddings + sentiment)
+        logger.info("Processing new articles...")
+        analysis_engine = AnalysisEngine(db)
+        unprocessed = ingestion_engine.get_unprocessed_articles()
+        articles_processed = analysis_engine.process_new_articles(unprocessed)
+        
+        # Step 3: Perform clustering
+        logger.info("Clustering articles...")
+        clusters = analysis_engine.perform_clustering()
+        
+        return RefreshResponse(
+            ingestion=IngestionStats(
+                **ingestion_stats,
+                message="Feed refresh completed successfully"
+            ),
+            articles_processed=articles_processed,
+            clusters_created=len(clusters),
+            timestamp=datetime.utcnow().isoformat()
+        )
+        
+    except Exception as e:
+        logger.error(f"Error during feed refresh: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/clusters", response_model=List[ClusterResponse], tags=["Clusters"])
+async def get_clusters(
+    min_sources: int = 2,
+    limit: int = 20,
+    db: Session = Depends(get_db)
+):
+    """
+    Get clustered news stories with articles from different bias perspectives.
+    
+    Args:
+        min_sources: Minimum number of different sources in a cluster (default: 2)
+        limit: Maximum number of clusters to return (default: 20)
+    
+    Returns:
+        List of clusters, each containing articles grouped by bias (left/center/right)
+    """
+    try:
+        # Get clusters ordered by article count
+        clusters = (
+            db.query(Cluster)
+            .filter(Cluster.article_count >= min_sources)
+            .order_by(Cluster.article_count.desc())
+            .limit(limit)
+            .all()
+        )
+        
+        results = []
+        for cluster in clusters:
+            # Group articles by bias
+            articles_by_bias = {
+                "left": [],
+                "center": [],
+                "right": []
+            }
+            
+            for article in cluster.articles:
+                bias = article.source_bias
+                if bias in articles_by_bias:
+                    articles_by_bias[bias].append(ArticleResponse(
+                        id=article.id,
+                        title=article.title,
+                        link=article.link,
+                        summary=article.summary,
+                        published_date=article.published_date.isoformat() if article.published_date else None,
+                        source_name=article.source_name,
+                        source_bias=article.source_bias,
+                        sentiment_polarity=article.sentiment_polarity,
+                        sentiment_subjectivity=article.sentiment_subjectivity,
+                        subjective_keywords=article.subjective_keywords or []
+                    ))
+            
+            results.append(ClusterResponse(
+                id=cluster.id,
+                representative_title=cluster.representative_title,
+                topic_keywords=cluster.topic_keywords or [],
+                article_count=cluster.article_count,
+                avg_sentiment=cluster.avg_sentiment,
+                sentiment_spread=cluster.sentiment_spread,
+                bias_coverage={
+                    "left": cluster.has_left,
+                    "center": cluster.has_center,
+                    "right": cluster.has_right
+                },
+                articles=BiasArticles(**articles_by_bias)
+            ))
+        
+        return results
+        
+    except Exception as e:
+        logger.error(f"Error fetching clusters: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/clusters/{cluster_id}", response_model=ClusterResponse, tags=["Clusters"])
+async def get_cluster(cluster_id: int, db: Session = Depends(get_db)):
+    """
+    Get a specific cluster by ID with all its articles.
+    """
+    cluster = db.query(Cluster).filter(Cluster.id == cluster_id).first()
+    
+    if not cluster:
+        raise HTTPException(status_code=404, detail="Cluster not found")
+    
+    # Group articles by bias
+    articles_by_bias = {"left": [], "center": [], "right": []}
+    
+    for article in cluster.articles:
+        bias = article.source_bias
+        if bias in articles_by_bias:
+            articles_by_bias[bias].append(ArticleResponse(
+                id=article.id,
+                title=article.title,
+                link=article.link,
+                summary=article.summary,
+                published_date=article.published_date.isoformat() if article.published_date else None,
+                source_name=article.source_name,
+                source_bias=article.source_bias,
+                sentiment_polarity=article.sentiment_polarity,
+                sentiment_subjectivity=article.sentiment_subjectivity,
+                subjective_keywords=article.subjective_keywords or []
+            ))
+    
+    return ClusterResponse(
+        id=cluster.id,
+        representative_title=cluster.representative_title,
+        topic_keywords=cluster.topic_keywords or [],
+        article_count=cluster.article_count,
+        avg_sentiment=cluster.avg_sentiment,
+        sentiment_spread=cluster.sentiment_spread,
+        bias_coverage={
+            "left": cluster.has_left,
+            "center": cluster.has_center,
+            "right": cluster.has_right
+        },
+        articles=BiasArticles(**articles_by_bias)
+    )
+
+
+@app.get("/stats", tags=["Stats"])
+async def get_stats(db: Session = Depends(get_db)):
+    """
+    Get overall statistics about the aggregated news.
+    """
+    total_articles = db.query(Article).count()
+    total_clusters = db.query(Cluster).count()
+    
+    # Articles by bias
+    articles_by_bias = {}
+    for bias in ["left", "center", "right"]:
+        count = db.query(Article).filter(Article.source_bias == bias).count()
+        articles_by_bias[bias] = count
+    
+    # Articles by source
+    from sqlalchemy import func
+    source_counts = (
+        db.query(Article.source_name, func.count(Article.id))
+        .group_by(Article.source_name)
+        .all()
+    )
+    
+    return {
+        "total_articles": total_articles,
+        "total_clusters": total_clusters,
+        "articles_by_bias": articles_by_bias,
+        "articles_by_source": {name: count for name, count in source_counts},
+        "configured_feeds": len(FEED_SOURCES)
+    }
+
+
+# ============== Run with Uvicorn ==============
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        log_level="info"
+    )</code></pre>
+            </div>
+        </section>
+
+        <!-- Frontend Section -->
+        <section id="frontend" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">9</span>
+                React Component (ClusterView.jsx)
+            </h2>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-gray-700/50 border-b border-gray-700">
+                    <span class="text-sm text-gray-400">📄 frontend/components/ClusterView.jsx</span>
+                    <button onclick="copyCode('frontend-code')" class="copy-btn px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded-lg transition">Copy</button>
+                </div>
+                <pre class="code-block"><code class="language-jsx" id="frontend-code">/**
+ * ClusterView Component
+ * Displays articles from a cluster side-by-side, grouped by political bias.
+ * Highlights framing differences and sentiment analysis.
+ */
+
+import React from 'react';
+
+// Sentiment indicator component
+const SentimentBar = ({ polarity }) => {
+  // polarity ranges from -1 (negative) to 1 (positive)
+  const percentage = ((polarity + 1) / 2) * 100;
+  const color = polarity < -0.2 ? 'bg-red-500' : polarity > 0.2 ? 'bg-green-500' : 'bg-yellow-500';
+  
+  return (
+    <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+      <div
+        className={`h-full ${color} transition-all duration-300`}
+        style={{ width: `${percentage}%` }}
+      />
+    </div>
+  );
+};
+
+// Single article card component
+const ArticleCard = ({ article }) => {
+  const biasColors = {
+    left: 'border-l-blue-500',
+    center: 'border-l-gray-400',
+    right: 'border-l-red-500',
+  };
+
+  return (
+    <div className={`bg-gray-800 rounded-lg border-l-4 ${biasColors[article.source_bias]} p-4 hover:bg-gray-750 transition-colors`}>
+      {/* Source Badge */}
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+          {article.source_name}
+        </span>
+        <span className="text-xs text-gray-500">
+          {article.published_date && new Date(article.published_date).toLocaleDateString()}
+        </span>
+      </div>
+      
+      {/* Title */}
+      <a 
+        href={article.link} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="block"
+      >
+        <h4 className="text-white font-medium mb-2 hover:text-blue-400 transition-colors line-clamp-3">
+          {article.title}
+        </h4>
+      </a>
+      
+      {/* Summary */}
+      {article.summary && (
+        <p className="text-gray-400 text-sm mb-3 line-clamp-2">
+          {article.summary}
+        </p>
+      )}
+      
+      {/* Sentiment Analysis */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-xs text-gray-500">
+          <span>Sentiment</span>
+          <span>{article.sentiment_polarity.toFixed(2)}</span>
+        </div>
+        <SentimentBar polarity={article.sentiment_polarity} />
+      </div>
+      
+      {/* Subjective Keywords */}
+      {article.subjective_keywords?.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-1">
+          {article.subjective_keywords.slice(0, 3).map((keyword, idx) => (
+            <span 
+              key={idx}
+              className="px-2 py-0.5 bg-yellow-900/30 text-yellow-400 text-xs rounded-full"
+            >
+              {keyword}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Column for a specific bias
+const BiasColumn = ({ bias, articles, label, color }) => {
+  return (
+    <div className="flex-1 min-w-0">
+      <div className={`flex items-center gap-2 mb-4 pb-2 border-b border-gray-700`}>
+        <div className={`w-3 h-3 rounded-full ${color}`} />
+        <h3 className="text-lg font-semibold text-white">{label}</h3>
+        <span className="text-gray-500 text-sm">({articles.length})</span>
+      </div>
+      
+      <div className="space-y-4">
+        {articles.length > 0 ? (
+          articles.map((article) => (
+            <ArticleCard key={article.id} article={article} />
+          ))
+        ) : (
+          <div className="text-center py-8 text-gray-500">
+            <p>No articles from {label.toLowerCase()} sources</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Main ClusterView component
+const ClusterView = ({ cluster }) => {
+  if (!cluster) return null;
+
+  const { 
+    representative_title, 
+    topic_keywords, 
+    article_count,
+    avg_sentiment,
+    sentiment_spread,
+    articles 
+  } = cluster;
+
+  return (
+    <div className="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
+      {/* Cluster Header */}
+      <div className="bg-gradient-to-r from-gray-800 to-gray-850 p-6 border-b border-gray-700">
+        <h2 className="text-xl font-bold text-white mb-3">
+          {representative_title}
+        </h2>
+        
+        {/* Topic Keywords */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {topic_keywords.map((keyword, idx) => (
+            <span 
+              key={idx}
+              className="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-full"
+            >
+              {keyword}
+            </span>
+          ))}
+        </div>
+        
+        {/* Cluster Stats */}
+        <div className="flex flex-wrap gap-6 text-sm">
+          <div className="flex items-center gap-2">
+            <span className="text-gray-400">Articles:</span>
+            <span className="text-white font-medium">{article_count}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-gray-400">Avg Sentiment:</span>
+            <span className={`font-medium ${
+              avg_sentiment < -0.2 ? 'text-red-400' : 
+              avg_sentiment > 0.2 ? 'text-green-400' : 'text-yellow-400'
+            }`}>
+              {avg_sentiment.toFixed(2)}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-gray-400">Sentiment Spread:</span>
+            <span className={`font-medium ${
+              sentiment_spread > 0.5 ? 'text-orange-400' : 'text-gray-300'
+            }`}>
+              {sentiment_spread.toFixed(2)}
+            </span>
+            {sentiment_spread > 0.5 && (
+              <span className="text-xs text-orange-400">(High variance!)</span>
+            )}
+          </div>
+        </div>
+      </div>
+      
+      {/* Articles Grid - Side by Side */}
+      <div className="p-6">
+        <div className="flex gap-6 overflow-x-auto">
+          <BiasColumn 
+            bias="left"
+            articles={articles.left}
+            label="Left-Leaning"
+            color="bg-blue-500"
+          />
+          <BiasColumn 
+            bias="center"
+            articles={articles.center}
+            label="Center"
+            color="bg-gray-400"
+          />
+          <BiasColumn 
+            bias="right"
+            articles={articles.right}
+            label="Right-Leaning"
+            color="bg-red-500"
+          />
+        </div>
+      </div>
+      
+      {/* Framing Analysis Note */}
+      {sentiment_spread > 0.5 && (
+        <div className="mx-6 mb-6 p-4 bg-orange-900/20 border border-orange-700/50 rounded-lg">
+          <p className="text-orange-300 text-sm">
+            <strong>⚠️ High Framing Divergence Detected:</strong> The sentiment spread 
+            of {sentiment_spread.toFixed(2)} indicates significantly different framing 
+            across sources. Compare headlines and language carefully.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ClusterView;
+
+
+// ============== Example Usage in Next.js Page ==============
+
+/*
+// pages/index.js
+
+import { useState, useEffect } from 'react';
+import ClusterView from '../components/ClusterView';
+
+export default function Home() {
+  const [clusters, setClusters] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchClusters = async () => {
+    try {
+      const res = await fetch('http://localhost:8000/clusters');
+      const data = await res.json();
+      setClusters(data);
+    } catch (error) {
+      console.error('Failed to fetch clusters:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshFeeds = async () => {
+    setRefreshing(true);
+    try {
+      await fetch('http://localhost:8000/feeds/refresh', { method: 'POST' });
+      await fetchClusters();
+    } catch (error) {
+      console.error('Failed to refresh feeds:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchClusters();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gray-950 text-white p-8">
+      <header className="max-w-7xl mx-auto mb-8">
+        <h1 className="text-3xl font-bold mb-2">Bias-Aware News</h1>
+        <p className="text-gray-400 mb-4">
+          Compare how different sources cover the same story
+        </p>
+        <button
+          onClick={refreshFeeds}
+          disabled={refreshing}
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-50"
+        >
+          {refreshing ? 'Refreshing...' : 'Refresh Feeds'}
+        </button>
+      </header>
+      
+      <main className="max-w-7xl mx-auto space-y-8">
+        {loading ? (
+          <p className="text-gray-400">Loading clusters...</p>
+        ) : clusters.length === 0 ? (
+          <p className="text-gray-400">No clusters found. Try refreshing feeds.</p>
+        ) : (
+          clusters.map((cluster) => (
+            <ClusterView key={cluster.id} cluster={cluster} />
+          ))
+        )}
+      </main>
+    </div>
+  );
+}
+*/</code></pre>
+            </div>
+        </section>
+
+        <!-- Live Demo Section -->
+        <section id="demo" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">10</span>
+                Live Demo Preview
+            </h2>
+            <p class="text-gray-400 mb-6">This is a simulated preview of how the ClusterView component would render with sample data.</p>
+            
+            <!-- Demo Component -->
+            <div id="demo-container" class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
+                <!-- Cluster Header -->
+                <div class="bg-gradient-to-r from-gray-800 to-gray-850 p-6 border-b border-gray-700">
+                    <h2 class="text-xl font-bold text-white mb-3">
+                        Congress Passes Major Infrastructure Bill
+                    </h2>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-full">infrastructure</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-full">congress</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-full">billion</span>
+                        <span class="px-3 py-1 bg-gray-700 text-gray-300 text-sm rounded-full">spending</span>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-6 text-sm">
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-400">Articles:</span>
+                            <span class="text-white font-medium">6</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-400">Avg Sentiment:</span>
+                            <span class="font-medium text-yellow-400">0.12</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-400">Sentiment Spread:</span>
+                            <span class="font-medium text-orange-400">0.68</span>
+                            <span class="text-xs text-orange-400">(High variance!)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Articles Grid -->
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Left Column -->
+                        <div>
+                            <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-700">
+                                <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                <h3 class="text-lg font-semibold text-white">Left-Leaning</h3>
+                                <span class="text-gray-500 text-sm">(2)</span>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-gray-800 rounded-lg border-l-4 border-l-blue-500 p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">CNN</span>
+                                        <span class="text-xs text-gray-500">Dec 15, 2024</span>
+                                    </div>
+                                    <h4 class="text-white font-medium mb-2">Historic Infrastructure Victory: Democrats Deliver on Key Campaign Promise</h4>
+                                    <p class="text-gray-400 text-sm mb-3">The landmark legislation will create millions of jobs and modernize America's crumbling roads and bridges...</p>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-xs text-gray-500">
+                                            <span>Sentiment</span>
+                                            <span>0.45</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-green-500" style="width: 72%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 flex flex-wrap gap-1">
+                                        <span class="px-2 py-0.5 bg-yellow-900/30 text-yellow-400 text-xs rounded-full">historic</span>
+                                        <span class="px-2 py-0.5 bg-yellow-900/30 text-yellow-400 text-xs rounded-full">landmark</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-800 rounded-lg border-l-4 border-l-blue-500 p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">MSNBC</span>
+                                        <span class="text-xs text-gray-500">Dec 15, 2024</span>
+                                    </div>
+                                    <h4 class="text-white font-medium mb-2">Biden's Infrastructure Win Shows Government Can Work for the People</h4>
+                                    <p class="text-gray-400 text-sm mb-3">After years of failed promises, this administration finally delivers meaningful change...</p>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-xs text-gray-500">
+                                            <span>Sentiment</span>
+                                            <span>0.38</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-green-500" style="width: 69%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Center Column -->
+                        <div>
+                            <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-700">
+                                <div class="w-3 h-3 rounded-full bg-gray-400"></div>
+                                <h3 class="text-lg font-semibold text-white">Center</h3>
+                                <span class="text-gray-500 text-sm">(2)</span>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-gray-800 rounded-lg border-l-4 border-l-gray-400 p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Reuters</span>
+                                        <span class="text-xs text-gray-500">Dec 15, 2024</span>
+                                    </div>
+                                    <h4 class="text-white font-medium mb-2">U.S. Congress Passes $1.2 Trillion Infrastructure Package</h4>
+                                    <p class="text-gray-400 text-sm mb-3">The bill includes funding for roads, bridges, broadband, and electric vehicle infrastructure over eight years...</p>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-xs text-gray-500">
+                                            <span>Sentiment</span>
+                                            <span>0.05</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-yellow-500" style="width: 52%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-800 rounded-lg border-l-4 border-l-gray-400 p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">AP News</span>
+                                        <span class="text-xs text-gray-500">Dec 15, 2024</span>
+                                    </div>
+                                    <h4 class="text-white font-medium mb-2">Infrastructure Bill Clears Congress, Heads to President's Desk</h4>
+                                    <p class="text-gray-400 text-sm mb-3">The bipartisan measure passed with support from both parties after months of negotiations...</p>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-xs text-gray-500">
+                                            <span>Sentiment</span>
+                                            <span>0.08</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-yellow-500" style="width: 54%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Column -->
+                        <div>
+                            <div class="flex items-center gap-2 mb-4 pb-2 border-b border-gray-700">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <h3 class="text-lg font-semibold text-white">Right-Leaning</h3>
+                                <span class="text-gray-500 text-sm">(2)</span>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-gray-800 rounded-lg border-l-4 border-l-red-500 p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Fox News</span>
+                                        <span class="text-xs text-gray-500">Dec 15, 2024</span>
+                                    </div>
+                                    <h4 class="text-white font-medium mb-2">Massive Spending Bill Passes Congress Amid Inflation Concerns</h4>
+                                    <p class="text-gray-400 text-sm mb-3">Critics warn the trillion-dollar package could worsen inflation and burden future generations with debt...</p>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-xs text-gray-500">
+                                            <span>Sentiment</span>
+                                            <span>-0.23</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-red-500" style="width: 38%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 flex flex-wrap gap-1">
+                                        <span class="px-2 py-0.5 bg-yellow-900/30 text-yellow-400 text-xs rounded-full">massive</span>
+                                        <span class="px-2 py-0.5 bg-yellow-900/30 text-yellow-400 text-xs rounded-full">burden</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-800 rounded-lg border-l-4 border-l-red-500 p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">NY Post</span>
+                                        <span class="text-xs text-gray-500">Dec 15, 2024</span>
+                                    </div>
+                                    <h4 class="text-white font-medium mb-2">GOP Blasts 'Reckless' Infrastructure Bill as Debt Explodes</h4>
+                                    <p class="text-gray-400 text-sm mb-3">Republican leaders say the bill is packed with wasteful spending that has nothing to do with real infrastructure...</p>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-xs text-gray-500">
+                                            <span>Sentiment</span>
+                                            <span>-0.35</span>
+                                        </div>
+                                        <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-red-500" style="width: 32%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 flex flex-wrap gap-1">
+                                        <span class="px-2 py-0.5 bg-yellow-900/30 text-yellow-400 text-xs rounded-full">blasts</span>
+                                        <span class="px-2 py-0.5 bg-yellow-900/30 text-yellow-400 text-xs rounded-full">reckless</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Warning Banner -->
+                <div class="mx-6 mb-6 p-4 bg-orange-900/20 border border-orange-700/50 rounded-lg">
+                    <p class="text-orange-300 text-sm">
+                        <strong>⚠️ High Framing Divergence Detected:</strong> The sentiment spread of 0.68 indicates significantly different framing across sources. Compare headlines and language carefully.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-12 py-8 px-6">
+        <div class="max-w-6xl mx-auto text-center text-gray-500 text-sm">
+            <p>Bias-Aware News Aggregator • Built with FastAPI, Sentence Transformers, React & Tailwind CSS</p>
+            <p class="mt-2">Designed to promote media literacy and critical thinking</p>
+        </div>
+    </footer>
+
+    <script>
+        // Section navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('bg-blue-600', 'text-white');
+                if (tab.dataset.section === sectionId) {
+                    tab.classList.add('bg-blue-600', 'text-white');
+                }
+            });
+        }
+
+        // Copy code functionality
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const text = codeElement.textContent || codeElement.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Find the button and show feedback
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.classList.add('bg-green-600');
+                btn.classList.remove('bg-blue-600');
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('bg-green-600');
+                    btn.classList.add('bg-blue-600');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        // Initialize Prism.js highlighting
+        document.addEventListener('DOMContentLoaded', () => {
+            Prism.highlightAll();
+            showSection('overview');
+        });
+    </script>
+</body>
+</html>
