@@ -55,6 +55,7 @@
                 <button onclick="showSection('main')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="main">Main API</button>
                 <button onclick="showSection('frontend')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="frontend">React Component</button>
                 <button onclick="showSection('demo')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="demo">Live Demo</button>
+                <button onclick="showSection('deployment')" class="nav-tab px-4 py-2 text-sm font-medium rounded-lg hover:bg-gray-700 whitespace-nowrap" data-section="deployment">Deployment</button>
             </div>
         </div>
     </nav>
@@ -2041,6 +2042,261 @@ export default function Home() {
                 </div>
             </div>
         </section>
+
+        <!-- Deployment Section -->
+        <section id="deployment" class="section hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-sm">11</span>
+                Deployment Options
+            </h2>
+
+            <!-- Question Answer -->
+            <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-purple-700/50 rounded-xl p-6 mb-6">
+                <h3 class="text-lg font-semibold text-purple-300 mb-3">❓ Can this run on GitHub Pages and mobile devices?</h3>
+                <p class="text-gray-300 mb-4">
+                    <strong>Short answer:</strong> The full backend cannot run on GitHub Pages, but a demo version CAN. Mobile support is excellent with the responsive design.
+                </p>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <!-- What GitHub Pages CAN Do -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                    <div class="bg-green-900/30 px-6 py-4 border-b border-gray-700">
+                        <h3 class="text-lg font-semibold text-green-400 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            GitHub Pages CAN Host
+                        </h3>
+                    </div>
+                    <ul class="p-6 space-y-3">
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <span>Static HTML/CSS/JavaScript files</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <span>React/Next.js <strong>exported as static</strong> site</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <span>Demo with pre-loaded/sample data</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <span>Documentation pages</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-green-500 mt-1">✓</span>
+                            <span>Mobile-responsive designs</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- What GitHub Pages CANNOT Do -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                    <div class="bg-red-900/30 px-6 py-4 border-b border-gray-700">
+                        <h3 class="text-lg font-semibold text-red-400 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                            GitHub Pages CANNOT Host
+                        </h3>
+                    </div>
+                    <ul class="p-6 space-y-3">
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-red-500 mt-1">✗</span>
+                            <span>Python/FastAPI backend servers</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-red-500 mt-1">✗</span>
+                            <span>Databases (SQLite, PostgreSQL)</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-red-500 mt-1">✗</span>
+                            <span>NLP model inference (sentence-transformers)</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-red-500 mt-1">✗</span>
+                            <span>Live RSS feed fetching (CORS blocked)</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300">
+                            <span class="text-red-500 mt-1">✗</span>
+                            <span>Server-side processing of any kind</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Deployment Options -->
+            <h3 class="text-xl font-bold mb-4 text-white">🚀 Recommended Deployment Strategies</h3>
+            
+            <div class="space-y-4 mb-8">
+                <!-- Option 1 -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center shrink-0">
+                            <span class="font-bold">1</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-semibold text-green-400 mb-2">Demo Mode (GitHub Pages ✓)</h4>
+                            <p class="text-gray-300 mb-3">Host a static demo with pre-fetched sample data. Great for showcasing the concept.</p>
+                            <div class="bg-gray-900 rounded-lg p-4 text-sm">
+                                <p class="text-gray-400 mb-2">I've created a <strong class="text-white">demo.html</strong> file that:</p>
+                                <ul class="text-gray-400 space-y-1 ml-4 list-disc">
+                                    <li>Runs 100% in the browser</li>
+                                    <li>Uses simulated cluster data</li>
+                                    <li>Is fully mobile responsive</li>
+                                    <li>Can be deployed to GitHub Pages immediately</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 2 -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
+                            <span class="font-bold">2</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-semibold text-blue-400 mb-2">Hybrid: Vercel/Railway + GitHub Pages</h4>
+                            <p class="text-gray-300 mb-3">Host the Python backend on a free-tier service, frontend separately.</p>
+                            <div class="grid sm:grid-cols-2 gap-3 text-sm">
+                                <div class="bg-gray-900 rounded-lg p-3">
+                                    <p class="text-purple-400 font-medium mb-1">Backend Options (Free Tier)</p>
+                                    <ul class="text-gray-400 space-y-1">
+                                        <li>• Railway.app</li>
+                                        <li>• Render.com</li>
+                                        <li>• Fly.io</li>
+                                        <li>• PythonAnywhere</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-900 rounded-lg p-3">
+                                    <p class="text-cyan-400 font-medium mb-1">Frontend Options</p>
+                                    <ul class="text-gray-400 space-y-1">
+                                        <li>• GitHub Pages</li>
+                                        <li>• Vercel (recommended for Next.js)</li>
+                                        <li>• Netlify</li>
+                                        <li>• Cloudflare Pages</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 3 -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center shrink-0">
+                            <span class="font-bold">3</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-semibold text-purple-400 mb-2">Full Stack on Vercel (Recommended)</h4>
+                            <p class="text-gray-300 mb-3">Use Vercel's serverless functions for the Python backend + Next.js frontend.</p>
+                            <div class="bg-gray-900 rounded-lg p-4 text-sm">
+                                <p class="text-gray-400 mb-2">Vercel supports Python via serverless functions:</p>
+                                <pre class="bg-gray-950 rounded p-3 text-green-400 overflow-x-auto"><code># api/clusters.py (Vercel serverless function)
+from http.server import BaseHTTPRequestHandler
+import json
+
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
+        self.wfile.write(json.dumps({"clusters": []}).encode())
+</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Option 4 -->
+                <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                            <span class="font-bold">4</span>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-lg font-semibold text-orange-400 mb-2">Client-Side ML with Transformers.js</h4>
+                            <p class="text-gray-300 mb-3">Run NLP models directly in the browser! No backend needed.</p>
+                            <div class="bg-gray-900 rounded-lg p-4 text-sm">
+                                <p class="text-gray-400 mb-2">Using Hugging Face's Transformers.js:</p>
+                                <pre class="bg-gray-950 rounded p-3 text-green-400 overflow-x-auto"><code>import { pipeline } from '@xenova/transformers';
+
+// Runs entirely in browser (downloads ~30MB model once)
+const embedder = await pipeline(
+  'feature-extraction', 
+  'Xenova/all-MiniLM-L6-v2'
+);
+
+const embedding = await embedder('News headline here');
+</code></pre>
+                                <p class="text-yellow-400 mt-2">⚠️ Still need a CORS proxy for RSS feeds</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Compatibility -->
+            <h3 class="text-xl font-bold mb-4 text-white">📱 Mobile Device Compatibility</h3>
+            <div class="bg-gray-800 rounded-xl border border-gray-700 p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-green-400 mb-3">✓ Fully Mobile Responsive</h4>
+                        <ul class="text-gray-300 space-y-2 text-sm">
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-500">✓</span>
+                                Touch-friendly interface
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-500">✓</span>
+                                Swipe gestures for comparison view
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-500">✓</span>
+                                Responsive grid layouts
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-500">✓</span>
+                                Mobile-first navigation
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-500">✓</span>
+                                Works offline once loaded
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-blue-400 mb-3">📐 Design Considerations</h4>
+                        <ul class="text-gray-300 space-y-2 text-sm">
+                            <li>• Tailwind CSS handles all breakpoints</li>
+                            <li>• Cards stack vertically on mobile</li>
+                            <li>• Horizontal scroll for side-by-side comparison</li>
+                            <li>• Bottom navigation bar for mobile</li>
+                            <li>• Touch targets are 44x44px minimum</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Try Demo Button -->
+            <div class="mt-8 text-center">
+                <a href="demo.html" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl font-semibold transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    Try Mobile Demo
+                </a>
+                <p class="text-gray-500 text-sm mt-2">Opens demo.html - works on any device!</p>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -2098,4 +2354,4 @@ export default function Home() {
         });
     </script>
 </body>
-</html>
+                </html>
